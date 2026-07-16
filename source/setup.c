@@ -281,7 +281,11 @@ u32 setup_main(void* arg){
     mount_sd(fsaHandle, "/vol/sdcard/");
 
     int logHandle = 0;
+#ifdef INSTALL_ONLY
+    int ret = FSA_OpenFile(fsaHandle, "/vol/sdcard/wafel_install.log", "w", &logHandle);
+#else
     int ret = FSA_OpenFile(fsaHandle, "/vol/sdcard/wafel_setup_mlc.log", "w", &logHandle);
+#endif
     debug_printf("Open logfile -%X\n", -ret);
     update_error_state(ret, 1);
 
@@ -290,6 +294,7 @@ u32 setup_main(void* arg){
     update_error_state(flush_ret, 2);
     log_printf(fsaHandle, logHandle, "Flush MLC: %X\n", flush_ret);
 
+#ifndef INSTALL_ONLY
     fix_region(fsaHandle, logHandle);
 
     ret = SCISetInitialLaunch(0);
@@ -299,8 +304,13 @@ u32 setup_main(void* arg){
     ret = flush_slc(fsaHandle);
     update_error_state(ret, 2);
     log_printf(fsaHandle, logHandle, "Flush SLC: %X\n", ret);
+#endif
 
+#ifdef INSTALL_ONLY
+    ret = FSA_Remove(fsaHandle, "/vol/sdcard/wiiu/ios_plugins/wafel_install.ipx");
+#else
     ret = FSA_Remove(fsaHandle, "/vol/sdcard/wiiu/ios_plugins/wafel_setup_mlc.ipx");
+#endif
     debug_printf("Delete plugin: %X\n", ret);
     log_printf(fsaHandle, logHandle, "Delete plugin: %X\n", ret);
 

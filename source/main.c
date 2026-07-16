@@ -44,6 +44,7 @@ void kern_main()
     // Disable panic in kernel
     ASM_PATCH_K(0x08129ce0, "bx lr\n");
 
+#ifndef INSTALL_ONLY
     // format MLC if needed
     ASM_PATCH_K(0x05027D24, ".thumb\nnop\nnop\n");
 
@@ -56,6 +57,7 @@ void kern_main()
 
     // create all system directories if they don't exist
     ASM_T_PATCH_K(0x050155ea, "tst r2,r2\n");
+#endif
 
     // don't start PPC
     ASM_T_PATCH_K(0x050340ee, "mov r0, #0\nnop")
