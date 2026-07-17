@@ -16,6 +16,8 @@ include $(MAKEFILE_ROOT_DIR)/elf_rules
 #---------------------------------------------------------------------------------
 export TARGET		:=	wafel_setup_mlc
 export BUILD		?=	debug
+export ROOTDIR		?=	$(CURDIR)
+export OUTPUT		=	$(ROOTDIR)/$(TARGET)
 
 R_SOURCES			:=	
 SOURCES				:=	source source/ios source/services source/wupserver source/latte
@@ -34,7 +36,7 @@ CFLAGS			:=	-g -std=c11 -Os \
 					-fomit-frame-pointer -fdata-sections -ffunction-sections \
 					$(ARCH) -nostartfiles
 
-CFLAGS			+=	$(INCLUDE) -D_GNU_SOURCE -DCAN_HAZ_IRQ -fno-builtin-printf -Wno-nonnull -Werror=implicit
+CFLAGS			+=	$(INCLUDE) -D_GNU_SOURCE -fno-builtin-printf -Wno-nonnull -Werror=implicit $(EXTRA_CFLAGS)
 
 CXXFLAGS		:=	$(CFLAGS) -fno-rtti -fno-exceptions
 
@@ -57,9 +59,6 @@ LIBDIRS			:=
 #---------------------------------------------------------------------------------
 ifneq ($(BUILD),$(notdir $(CURDIR)))
 #---------------------------------------------------------------------------------
-
-export ROOTDIR	:=	$(CURDIR)
-export OUTPUT	:=	$(CURDIR)/$(TARGET)
 
 SOURCES         := $(SOURCES) $(foreach dir,$(R_SOURCES), $(dir) $(filter %/, $(wildcard $(dir)/*/)))
 INCLUDES        := $(INCLUDES) $(foreach dir,$(R_INCLUDES), $(dir) $(filter %/, $(wildcard $(dir)/*/)))
@@ -97,20 +96,25 @@ export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 
 export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 
-.PHONY: $(BUILD) clean all
+.PHONY: clean all wafel_setup_mlc.ipx wafel_install.ipx
 
 #---------------------------------------------------------------------------------
-all: $(BUILD)
+all: wafel_setup_mlc.ipx wafel_install.ipx
 
-$(BUILD):
-	@[ -d $@ ] || mkdir -p $@
-	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-	@mv $(OUTPUT).elf $(OUTPUT).ipx
+wafel_setup_mlc.ipx:
+	@[ -d build_setup ] || mkdir -p build_setup
+	@$(MAKE) --no-print-directory -C build_setup -f $(CURDIR)/Makefile TARGET=wafel_setup_mlc BUILD=build_setup
+	@mv $(ROOTDIR)/wafel_setup_mlc.elf $(ROOTDIR)/wafel_setup_mlc.ipx
+
+wafel_install.ipx:
+	@[ -d build_install ] || mkdir -p build_install
+	@$(MAKE) --no-print-directory -C build_install -f $(CURDIR)/Makefile TARGET=wafel_install BUILD=build_install EXTRA_CFLAGS="-DINSTALL_ONLY"
+	@mv $(ROOTDIR)/wafel_install.elf $(ROOTDIR)/wafel_install.ipx
 
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT)-strip.elf $(OUTPUT).ipx
+	@rm -fr build_setup build_install $(ROOTDIR)/wafel_setup_mlc.elf $(ROOTDIR)/wafel_setup_mlc.ipx $(ROOTDIR)/wafel_install.elf $(ROOTDIR)/wafel_install.ipx
 
 
 #---------------------------------------------------------------------------------
