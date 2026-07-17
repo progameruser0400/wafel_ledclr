@@ -148,7 +148,7 @@ void install_all_titles(int fd, char *directory, int logHandle){
         return;
     }
 
-    directoryEntry_s *dir_entry = iosAlloc(0x00001, sizeof(directoryEntry_s));
+    FSDirectoryEntry *dir_entry = iosAlloc(0x00001, sizeof(FSDirectoryEntry));
     if(dir_entry == NULL)
     {
         update_error_state(1, 2);
