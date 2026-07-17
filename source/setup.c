@@ -15,6 +15,14 @@
 #define MAX_LOG_LINE_LENGHT 512
 #define CROSS_PROCESS_HEAP_ID 0xcaff
 
+#ifdef INSTALL_ONLY
+#define LOG_FILE_PATH "/vol/sdcard/wafel_install.log"
+#define PLUGIN_FILE_PATH "/vol/sdcard/wiiu/ios_plugins/wafel_install.ipx"
+#else
+#define LOG_FILE_PATH "/vol/sdcard/wafel_setup_mlc.log"
+#define PLUGIN_FILE_PATH "/vol/sdcard/wiiu/ios_plugins/wafel_setup_mlc.ipx"
+#endif
+
 
 static int log_printf(int fsaHandle, int logHandle, const char* fmt, ...){
     if(!logHandle) {
@@ -281,11 +289,7 @@ u32 setup_main(void* arg){
     mount_sd(fsaHandle, "/vol/sdcard/");
 
     int logHandle = 0;
-#ifdef INSTALL_ONLY
-    int ret = FSA_OpenFile(fsaHandle, "/vol/sdcard/wafel_install.log", "w", &logHandle);
-#else
-    int ret = FSA_OpenFile(fsaHandle, "/vol/sdcard/wafel_setup_mlc.log", "w", &logHandle);
-#endif
+    int ret = FSA_OpenFile(fsaHandle, LOG_FILE_PATH, "w", &logHandle);
     debug_printf("Open logfile -%X\n", -ret);
     update_error_state(ret, 1);
 
@@ -306,11 +310,7 @@ u32 setup_main(void* arg){
     log_printf(fsaHandle, logHandle, "Flush SLC: %X\n", ret);
 #endif
 
-#ifdef INSTALL_ONLY
-    ret = FSA_Remove(fsaHandle, "/vol/sdcard/wiiu/ios_plugins/wafel_install.ipx");
-#else
-    ret = FSA_Remove(fsaHandle, "/vol/sdcard/wiiu/ios_plugins/wafel_setup_mlc.ipx");
-#endif
+    ret = FSA_Remove(fsaHandle, PLUGIN_FILE_PATH);
     debug_printf("Delete plugin: %X\n", ret);
     log_printf(fsaHandle, logHandle, "Delete plugin: %X\n", ret);
 
