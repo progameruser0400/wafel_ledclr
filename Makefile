@@ -36,7 +36,7 @@ CFLAGS			:=	-g -std=c11 -Os \
 					-fomit-frame-pointer -fdata-sections -ffunction-sections \
 					$(ARCH) -nostartfiles
 
-CFLAGS			+=	$(INCLUDE) -D_GNU_SOURCE -DCAN_HAZ_IRQ -fno-builtin-printf -Wno-nonnull -Werror=implicit $(EXTRA_CFLAGS)
+CFLAGS			+=	$(INCLUDE) -D_GNU_SOURCE -fno-builtin-printf -Wno-nonnull -Werror=implicit $(EXTRA_CFLAGS)
 
 CXXFLAGS		:=	$(CFLAGS) -fno-rtti -fno-exceptions
 
