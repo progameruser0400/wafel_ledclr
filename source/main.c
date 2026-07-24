@@ -11,7 +11,7 @@
 
 #include "setup.h"
 
-void setup_hook(trampoline_t_state* state){
+void setup_hook(trampoline_t_state* state){ // i'm not very smart if theres a better way to do this then lmk
     // Start up setup thread
     u8* setup_stack = (u8*) iosAllocAligned(0x0001, 0x1000, 0x20);
     if (!setup_stack) {
@@ -38,7 +38,7 @@ void kern_main()
     debug_printf("we in here plugin kern %p\n", kern_main);
 
     debug_printf("init_linking symbol at: %08x\n", wafel_find_symbol("init_linking"));
-    trampoline_t_hook_before(0x05027e9e, setup_hook);
+    trampoline_t_hook_before(0x05027e9e, setup_hook); // this also
 
     debug_printf("done\n");
 }
