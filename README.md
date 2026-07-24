@@ -5,6 +5,8 @@ thing
 
 <br/>cannot guarantee it won't format your mlc on accident but it doesn't for me so you're probably fine
 
+<br/>plugin "excellently" crafted by yours truly
+
 
 <br/>credit
 <br/>https://github.com/StroopwafelCFW/stroopwafel
