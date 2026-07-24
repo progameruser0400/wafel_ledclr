@@ -11,7 +11,6 @@
 
 #include "setup.h"
 
-
 void setup_hook(trampoline_t_state* state){
     // Start up setup thread
     u8* setup_stack = (u8*) iosAllocAligned(0x0001, 0x1000, 0x20);
@@ -28,8 +27,7 @@ void setup_hook(trampoline_t_state* state){
     debug_printf("start setup thread returned: %X\n", start_ret);
 }
 
-
-// This fn runs before everything else in kernel mode.
+    // This fn runs before everything else in kernel mode.
 // It should be used to do extremely early patches
 // (ie to BSP and kernel, which launches before MCP)
 // It jumps to the real IOS kernel entry on exit.
@@ -37,34 +35,12 @@ __attribute__((target("arm")))
 void kern_main()
 {
     // Make sure relocs worked fine and mappings are good
-    debug_printf("we in here setup mlc plugin kern %p\n", kern_main);
+    debug_printf("we in here plugin kern %p\n", kern_main);
 
     debug_printf("init_linking symbol at: %08x\n", wafel_find_symbol("init_linking"));
-
-    // Disable panic in kernel
-    ASM_PATCH_K(0x08129ce0, "bx lr\n");
-
-#ifndef INSTALL_ONLY
-    // format MLC if needed
-    ASM_PATCH_K(0x05027D24, ".thumb\nnop\nnop\n");
-
-    // Patch MCP_SetSysProdSettings debug mode check
-    ASM_T_PATCH_K(0x05024648, "nop\nnop\n");
-
-    // Ignore permissions when writing settings xml
-    ASM_T_PATCH_K(0x0503cc44, "nop\nnop");
-    ASM_T_PATCH_K(0x0503cd32, "nop");
-
-    // create all system directories if they don't exist
-    ASM_T_PATCH_K(0x050155ea, "tst r2,r2\n");
-#endif
-
-    // don't start PPC
-    ASM_T_PATCH_K(0x050340ee, "mov r0, #0\nnop")
-
     trampoline_t_hook_before(0x05027e9e, setup_hook);
 
-    debug_printf("setup patches applied\n");
+    debug_printf("done\n");
 }
 
 // This fn runs before MCP's main thread, and can be used
