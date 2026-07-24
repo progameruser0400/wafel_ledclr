@@ -8,7 +8,7 @@ int SetNotificationLED(uint8_t mask);
 enum {
     NOTIF_LED_OFF               = 0,
     NOTIF_LED_ORANGE_BLINKING   = 1 << 0, // why is it orange listed here and sometimes yellow listed in the minute smc.h? i thought there were only 3 leds? or orange is just yellow
-    NOTIF_LED_ORANGE            = 1 << 1,
+    NOTIF_LED_ORANGE            = 1 << 1, // nvm i'm just stupid
     NOTIF_LED_RED_BLINKING      = 1 << 2,
     NOTIF_LED_RED               = 1 << 3,
     NOTIF_LED_BLUE_BLINKING     = 1 << 4,
