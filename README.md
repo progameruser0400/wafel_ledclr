@@ -1,6 +1,6 @@
-# wafel_setup_mlc_not_really
+# wafel_ledcolor
 
-thing
+changes your power led color (oh my god)
 
 <br/>building is the same for the setup plugin, default color is blue if you weren't smart enough to change it
 
