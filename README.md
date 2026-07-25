@@ -6,7 +6,7 @@ thing
 
 <br/>cannot guarantee it won't format your mlc on accident but it doesn't for me so you're probably fine
 
-<br/>probably doesn't respect the yellow led standby mode wants
+<br/>probably doesn't respect the yellow led standby mode does
 
 <br/>plugin "excellently" crafted by yours truly
 
