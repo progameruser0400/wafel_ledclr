@@ -20,15 +20,15 @@ changes your power led color (oh my god)
 <br/>building info
 
 <br/>heres a loop, cycles through red blue and yellow bulbs every half second:
-<br/>while (1) {
-        SetNotificationLED(NOTIF_LED_RED);
-        usleep(500000);
-        SetNotificationLED(NOTIF_LED_BLUE);
-        usleep(500000);
-        SetNotificationLED(NOTIF_LED_YELLOW);
-        usleep(500000);
-    }
+        <br/>while (1) {
+           <br/>SetNotificationLED(NOTIF_LED_RED);
+           <br/>usleep(500000);
+           <br/>SetNotificationLED(NOTIF_LED_BLUE);
+           <br/>usleep(500000);
+           <br/>SetNotificationLED(NOTIF_LED_YELLOW);
+           <br/>usleep(500000);
+       <br/>}
 
 
 <br/>heres red and yellow bulbs on
-    SetNotificationLED(NOTIF_LED_RED | NOTIF_LED_YELLOW);
+<br/>SetNotificationLED(NOTIF_LED_RED | NOTIF_LED_YELLOW);
