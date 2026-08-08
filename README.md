@@ -19,7 +19,7 @@ changes your power led color (oh my god)
 
 <br/>code time
 
-<br/>heres a loop of red, blue, and yellow every half second
+<br/>heres an infinite loop of red, blue, and yellow every half second
 
     while (1) {
         SetNotificationLED(NOTIF_LED_RED);
