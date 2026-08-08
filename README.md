@@ -15,3 +15,20 @@ changes your power led color (oh my god)
 <br/>https://github.com/StroopwafelCFW/stroopwafel
 <br/>https://github.com/StroopwafelCFW/wafel_setup_mlc
 <br/>https://github.com/StroopwafelCFW/minute_minute
+
+
+<br/>building info
+
+<br/>heres a loop, cycles through red blue and yellow bulbs every half second:
+<br/>while (1) {
+        SetNotificationLED(NOTIF_LED_RED);
+        usleep(500000);
+        SetNotificationLED(NOTIF_LED_BLUE);
+        usleep(500000);
+        SetNotificationLED(NOTIF_LED_YELLOW);
+        usleep(500000);
+    }
+
+
+<br/>heres red and yellow bulbs on
+    SetNotificationLED(NOTIF_LED_RED | NOTIF_LED_YELLOW);
