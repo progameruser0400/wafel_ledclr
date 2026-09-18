@@ -6,7 +6,7 @@ changes your power led color (oh my god)
 
 <br/>cannot guarantee it won't format your mlc on accident but it doesn't for me so you're probably fine (it won't, you're fine)
 
-<br/>probably doesn't respect the yellow led standby mode does
+<br/>doesn't respect the yellow led standby mode does, you would have to patch the eco.rpx i think i'm not sure (citation needed)
 
 <br/>plugin "excellently" crafted by yours truly
 
